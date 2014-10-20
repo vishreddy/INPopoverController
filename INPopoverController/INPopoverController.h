@@ -68,6 +68,9 @@
 /** Whether the popover is currently visible or not **/
 @property (nonatomic, assign, readonly) BOOL popoverIsVisible;
 
+/** Offsets the whole popover by given value. **/
+@property (nonatomic, assign) NSPoint arrowOffset;
+
 #pragma mark -
 #pragma mark Methods
 

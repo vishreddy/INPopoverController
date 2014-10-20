@@ -79,6 +79,7 @@
 	INPopoverWindowFrame *frameView = [self frameView];
 	if (!frameView) {
 		frameView = [[INPopoverWindowFrame alloc] initWithFrame:bounds];
+        frameView.arrowOffset = self.arrowOffset;
 		[super setContentView:frameView]; // Call on super or there will be infinite loop
 	}
 	if (_popoverContentView) {
@@ -158,6 +159,15 @@
 - (void)cancelOperation:(id)sender
 {
 	if (self.popoverController.closesWhenEscapeKeyPressed) [self.popoverController closePopover:nil];
+}
+
+#pragma mark -
+#pragma mark Setters
+
+- (void)setArrowOffset:(NSPoint)arrowOffset {
+    _arrowOffset = arrowOffset;
+    self.frameView.arrowOffset = arrowOffset;
+    [self.frameView setNeedsDisplay:YES];
 }
 
 #pragma mark -

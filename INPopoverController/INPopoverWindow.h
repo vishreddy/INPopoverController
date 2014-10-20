@@ -17,6 +17,7 @@
 @property (nonatomic, readonly) INPopoverWindowFrame *frameView; // Equivalent to contentView
 @property (nonatomic, assign) INPopoverController *popoverController;
 @property (nonatomic, strong) NSView *popoverContentView;
+@property (nonatomic, assign) NSPoint arrowOffset;
 
 - (void)presentAnimated;
 - (void)dismissAnimated;

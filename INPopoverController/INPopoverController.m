@@ -129,6 +129,7 @@
 
 // Calculate the frame of the window depending on the arrow direction
 - (NSRect)popoverFrameWithSize:(NSSize)contentSize andArrowDirection:(INPopoverArrowDirection)direction
+
 {
 	NSRect contentRect = NSZeroRect;
 	contentRect.size = contentSize;
@@ -151,6 +152,7 @@
 		// If no arrow direction is specified, just return an empty rect
 		windowFrame = NSZeroRect;
 	}
+    windowFrame = NSOffsetRect(windowFrame, _popoverWindow.arrowOffset.x, _popoverWindow.arrowOffset.y);
 	return windowFrame;
 }
 
@@ -230,6 +232,10 @@
 	return [_popoverWindow isVisible];
 }
 
+- (NSPoint)arrowOffset {
+    return _popoverWindow.arrowOffset;
+}
+
 #pragma mark -
 #pragma mark Setters
 
@@ -287,6 +293,12 @@
 	_popoverWindow.frameView.arrowDirection = direction;
 }
 
+- (void)setArrowOffset:(NSPoint)arrowOffset {
+    _popoverWindow.arrowOffset = arrowOffset;
+    NSRect adjustedRect = [self popoverFrameWithSize:self.contentSize andArrowDirection:self.arrowDirection];
+    [_popoverWindow setFrame:adjustedRect display:YES animate:self.animates];
+}
+
 #pragma mark -
 #pragma mark Private
 
@@ -295,6 +307,7 @@
 {
 	// Create an empty popover window
 	_popoverWindow = [[INPopoverWindow alloc] initWithContentRect:NSZeroRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
+    _popoverWindow.arrowOffset = NSZeroPoint;
 	_popoverWindow.popoverController = self;
 
 	// set defaults like iCal popover
